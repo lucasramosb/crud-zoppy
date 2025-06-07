@@ -1,0 +1,8 @@
+{
+  "name": "crud-zoppy",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
