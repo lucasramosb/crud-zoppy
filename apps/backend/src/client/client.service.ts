@@ -11,6 +11,16 @@ export class ClientService {
     private readonly clientModel: typeof Client,
   ) {}
   async create(createClientDto: CreateClientDto): Promise<Client> {
+    const cpfcnpj = await this.clientModel.findOne({
+      where: {
+        cpf_cnpj: createClientDto.cpf_cnpj,
+      },
+    });
+    if (cpfcnpj) {
+      throw new NotFoundException(
+        `Cliente com CPF/CNPJ ${createClientDto.cpf_cnpj} já existe.`,
+      );
+    }
     return this.clientModel.create(createClientDto);
   }
 
@@ -27,12 +37,15 @@ export class ClientService {
   }
 
   async update(id: string, updateClientDto: UpdateClientDto): Promise<Client> {
-    const client = await this.findOne(id);
+    const client = await this.clientModel.findByPk(id);
+    if (!client) {
+      throw new NotFoundException(`Cliente com ID ${id} não encontrado.`);
+    }
     return client.update(updateClientDto);
   }
 
   async remove(id: string): Promise<void> {
-    const client = await this.findOne(id);
+    const client = await this.clientModel.findByPk(id);
     if (!client) {
       throw new NotFoundException(`Cliente com ID ${id} não encontrado.`);
     }
