@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
@@ -21,6 +22,8 @@ export class Pedido extends Model<Pedido> {
   @Column(DataType.UUID)
   id: string;
 
+  @BelongsTo(() => Client)
+  cliente: Client;
   @ForeignKey(() => Client)
   @Column({
     field: 'cliente_id',

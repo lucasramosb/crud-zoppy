@@ -3,12 +3,14 @@ import {
   CreatedAt,
   DataType,
   Default,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
   Unique,
   UpdatedAt,
 } from 'sequelize-typescript';
+import { Pedido } from 'src/pedido/pedido.model';
 
 @Table({
   tableName: 'client',
@@ -66,4 +68,7 @@ export class Client extends Model<Client> {
   @UpdatedAt
   @Column({ field: 'updated_at' })
   updatedAt: Date;
+
+  @HasMany(() => Pedido)
+  pedidos: Pedido[];
 }
