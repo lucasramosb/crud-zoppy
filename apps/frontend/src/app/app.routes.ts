@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./clients/clients.module').then((m) => m.ClientsModule),
   },
+  {
+    path: 'pedidos',
+    loadChildren: () =>
+      import('./pedidos/pedidos.module').then((m) => m.PedidosModule),
+  },
 ];
