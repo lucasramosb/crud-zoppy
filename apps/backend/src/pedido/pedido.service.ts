@@ -27,7 +27,9 @@ export class PedidoService {
   }
 
   async findAll(): Promise<Pedido[]> {
-    return this.pedidoModel.findAll();
+    return this.pedidoModel.findAll({
+      include: [Client],
+    });
   }
 
   async findOne(id: string) {
