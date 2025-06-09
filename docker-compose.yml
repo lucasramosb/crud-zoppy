@@ -5,6 +5,8 @@ services:
     image: mysql:8.0
     container_name: mysql_crud_zoppy
     restart: unless-stopped
+    env_file:
+      - ./.env
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${DB_NAME}
@@ -14,6 +16,54 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - zoppy_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: backend_zoppy
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_TYPE: mysql
+      DB_PORT_INTERNAL: 3306
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_NAME}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - zoppy_network
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: frontend_zoppy
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - zoppy_network
 
 volumes:
   db_data:
+
+networks:
+  zoppy_network:
+    driver: bridge

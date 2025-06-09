@@ -5,7 +5,7 @@ import { Pedido } from '../models/pedidos.model';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {
-  private baseUrl = 'http://localhost:3001/pedido';
+  private baseUrl = 'http://localhost:3000/pedido';
 
   constructor(private http: HttpClient) {}
 

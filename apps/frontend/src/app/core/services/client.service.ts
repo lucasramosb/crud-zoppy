@@ -5,7 +5,7 @@ import { Client } from '../../core/models/client.model';
 
 @Injectable({ providedIn: 'root' })
 export class ClientService {
-  private baseUrl = 'http://localhost:3000/clients';
+  private baseUrl = 'http://localhost:3000/client';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,7 @@ export class ClientService {
   }
 
   update(id: string, client: Partial<Client>): Observable<Client> {
-    return this.http.put<Client>(`${this.baseUrl}/${id}`, client);
+    return this.http.patch<Client>(`${this.baseUrl}/${id}`, client);
   }
 
   delete(id: string): Observable<void> {

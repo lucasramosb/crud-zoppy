@@ -76,7 +76,7 @@ export class ClientListPageComponent implements OnInit {
         Swal.fire(
           'Sucesso!',
           `Cliente ${isUpdate ? 'atualizado' : 'criado'} com sucesso.`,
-          'success'
+          'success',
         );
       },
       error: (err) => {
@@ -87,15 +87,8 @@ export class ClientListPageComponent implements OnInit {
   }
 
   openViewClientModal(client: Client): void {
-    console.log('Abrindo modal de visualização para:', client);
     this.selectedClientForView = client;
     this.isViewModalOpen = true;
-    console.log(
-      'isViewModalOpen:',
-      this.isViewModalOpen,
-      'selectedClientForView:',
-      this.selectedClientForView
-    );
   }
 
   closeViewModal(): void {
@@ -103,7 +96,7 @@ export class ClientListPageComponent implements OnInit {
     this.selectedClientForView = null;
   }
 
-  handleClientDeleted(clientId: string): void {
+  handleClientDeleted(): void {
     this.loadClients();
   }
 }
