@@ -1,12 +1,26 @@
-<div class="p-4 sm:p-6">
-    <div class="flex justify-between items-center mb-4">
-        <h1 class="text-xl font-bold">Clientes</h1>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="toggleModal()">
-            Novo Cliente
+<div class="container mx-auto">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-4 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-0">
+            Gerenciamento de Clientes
+        </h1>
+        <button (click)="openNewClientModal()"
+            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+            </svg>
+            Adicionar Cliente
         </button>
     </div>
+    <app-clients-list *ngIf="!isLoading" [clients]="clients" (deleted)="handleClientDeleted($event)"
+        (viewDetailsClicked)="openViewClientModal($event)">
+    </app-clients-list>
 
-    <app-clients-list></app-clients-list>
+    <app-clients-modal [open]="isEditModalOpen" [clientToEdit]="editingClient" (close)="closeEditModal()"
+        (save)="handleSaveClient($event)">
+    </app-clients-modal>
 
-    <app-clients-modal [open]="modalOpen" (close)="toggleModal()"></app-clients-modal>
+    <app-client-view-modal [open]="isViewModalOpen" [client]="selectedClientForView" (close)="closeViewModal()">
+    </app-client-view-modal>
 </div>
