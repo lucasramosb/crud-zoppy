@@ -13,13 +13,6 @@
         <app-clients-form [client]="client" (formSubmitted)="onFormSubmitted($event)"></app-clients-form>
     </div>
 
-    <div class="mt-6 text-center">
-        <button (click)="goBackToList()"
-            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-md transition duration-150 ease-in-out">
-            Voltar para a Lista
-        </button>
-    </div>
-
     <div *ngIf="!loading && !client" class="text-center py-10">
         <p class="text-red-500 font-semibold">Cliente não encontrado.</p>
     </div>

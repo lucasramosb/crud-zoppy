@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Client } from '../../../core/models/client.model';
 import { ClientService } from '../../../core/services/client.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-clients-list',
   standalone: true,
@@ -34,14 +36,37 @@ export class ClientsListComponent implements OnInit {
   }
 
   delete(id: string): void {
-    this.clientService.delete(id).subscribe({
-      next: () => {
-        this.clients = this.clients.filter((client) => client.id !== id);
-        this.deleted.emit(id);
-      },
-      error: (err) => {
-        console.error('Erro ao excluir cliente:', err);
-      },
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clientService.delete(id).subscribe({
+          next: () => {
+            this.clients = this.clients.filter((client) => client.id !== id);
+            this.deleted.emit(id);
+            Swal.fire(
+              'Deletado!',
+              'O cliente foi deletado com sucesso.',
+              'success'
+            );
+          },
+          error: (err) => {
+            console.error('Erro ao excluir cliente:', err);
+            Swal.fire(
+              'Erro!',
+              'Ocorreu um erro ao deletar o cliente.',
+              'error'
+            );
+          },
+        });
+      }
     });
   }
 }

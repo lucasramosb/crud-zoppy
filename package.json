@@ -4,5 +4,9 @@
   "workspaces": [
     "frontend",
     "backend"
-  ]
+  ],
+  "dependencies": {
+    "ngx-sweetalert2": "^0.2.7",
+    "sweetalert2": "^11.22.0"
+  }
 }

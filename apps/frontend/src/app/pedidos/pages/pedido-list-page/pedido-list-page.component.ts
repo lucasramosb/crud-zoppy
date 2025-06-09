@@ -5,6 +5,7 @@ import { PedidoModalComponent } from '../../components/pedido-modal/pedido-modal
 import { PedidoViewModalComponent } from '../../components/pedido-view-modal/pedido-view-modal.component';
 import { Pedido } from '../../../core/models/pedidos.model';
 import { PedidoService } from '../../../core/services/pedidos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pedido-list-page',
@@ -41,6 +42,7 @@ export class PedidoListPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao carregar pedidos', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao carregar os pedidos.', 'error');
         this.isLoading = false;
       },
     });
@@ -56,12 +58,14 @@ export class PedidoListPageComponent implements OnInit {
 
   handleSaveNewPedido(pedidoData: Partial<Pedido>): void {
     this.pedidoService.create(pedidoData).subscribe({
-      next: () => {
+      next: (data: Pedido) => {
         this.loadPedidos();
         this.closeNewPedidoModal();
+        Swal.fire('Sucesso!', 'Pedido criado com sucesso.', 'success');
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Erro ao criar pedido:', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao criar o pedido.', 'error');
       },
     });
   }

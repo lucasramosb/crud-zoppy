@@ -8,6 +8,7 @@ import {
 import { Client } from '../../../core/models/client.model';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients-form',
@@ -19,7 +20,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class ClientsFormComponent implements OnInit {
   @Input() client: Client | null = null;
   @Output() formSubmitted = new EventEmitter<Client>();
-  @Output() cancelled = new EventEmitter<void>(); // Novo evento
+  @Output() cancelled = new EventEmitter<void>();
 
   clientForm!: FormGroup;
 

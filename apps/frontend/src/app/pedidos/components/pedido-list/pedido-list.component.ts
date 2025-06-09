@@ -8,6 +8,7 @@ import {
 } from '@angular/common';
 import { Pedido } from '../../../core/models/pedidos.model';
 import { PedidoService } from '../../../core/services/pedidos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pedido-list',
@@ -29,8 +30,32 @@ export class PedidoListComponent implements OnInit {
   }
 
   deletePedido(id: string): void {
-    this.pedidoService.delete(id).subscribe(() => {
-      this.deleted.emit(id);
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pedidoService.delete(id).subscribe({
+          next: () => {
+            this.deleted.emit(id);
+            Swal.fire(
+              'Deletado!',
+              'O pedido foi deletado com sucesso.',
+              'success'
+            );
+          },
+          error: (err) => {
+            console.error('Erro ao excluir pedido:', err);
+            Swal.fire('Erro!', 'Ocorreu um erro ao deletar o pedido.', 'error');
+          },
+        });
+      }
     });
   }
 

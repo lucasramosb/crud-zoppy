@@ -5,6 +5,8 @@ import { ClientsModalComponent } from '../../components/clients-modal/clients-mo
 import { CommonModule } from '@angular/common';
 import { ClientsListComponent } from '../../components/clients-list/clients-list.component';
 import { ClientViewModalComponent } from '../../components/client-view-modal/client-view-modal.component';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-client-list-page',
   standalone: true,
@@ -40,6 +42,7 @@ export class ClientListPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao carregar clientes', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao carregar os clientes.', 'error');
         this.isLoading = false;
       },
     });
@@ -61,17 +64,24 @@ export class ClientListPageComponent implements OnInit {
   }
 
   handleSaveClient(clientData: Client): void {
-    const operation = clientData.id
-      ? this.clientService.update(clientData.id, clientData)
+    const isUpdate = !!clientData.id;
+    const operation = isUpdate
+      ? this.clientService.update(clientData.id!, clientData)
       : this.clientService.create(clientData);
 
     operation.subscribe({
       next: () => {
         this.loadClients();
         this.closeEditModal();
+        Swal.fire(
+          'Sucesso!',
+          `Cliente ${isUpdate ? 'atualizado' : 'criado'} com sucesso.`,
+          'success'
+        );
       },
       error: (err) => {
         console.error('Erro ao salvar cliente:', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao salvar o cliente.', 'error');
       },
     });
   }

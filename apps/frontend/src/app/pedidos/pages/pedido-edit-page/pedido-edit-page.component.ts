@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PedidoFormComponent } from '../../components/pedido-form/pedido-form.component';
 import { Pedido } from '../../../core/models/pedidos.model';
 import { PedidoService } from '../../../core/services/pedidos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pedido-edit-page',
@@ -41,6 +42,7 @@ export class PedidoEditPageComponent implements OnInit {
       },
       error: (err: any) => {
         console.error('Erro ao carregar pedido:', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao carregar o pedido.', 'error');
         this.isLoading = false;
         this.router.navigate(['/pedidos']);
       },
@@ -50,14 +52,21 @@ export class PedidoEditPageComponent implements OnInit {
   handleFormSubmit(pedidoData: Partial<Pedido>): void {
     if (!this.pedidoId) {
       console.error('ID do pedido é nulo, não é possível atualizar.');
+      Swal.fire(
+        'Erro!',
+        'Não foi possível atualizar o pedido: ID não encontrado.',
+        'error'
+      );
       return;
     }
     this.pedidoService.update(this.pedidoId, pedidoData).subscribe({
       next: () => {
         this.router.navigate(['/pedidos']);
+        Swal.fire('Sucesso!', 'Pedido atualizado com sucesso.', 'success');
       },
       error: (err: any) => {
         console.error('Erro ao atualizar pedido:', err);
+        Swal.fire('Erro!', 'Ocorreu um erro ao atualizar o pedido.', 'error');
       },
     });
   }
