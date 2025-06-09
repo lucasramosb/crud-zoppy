@@ -1,22 +1,71 @@
-<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="space-y-4">
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="space-y-6">
     <div>
-        <label class="block font-medium">Nome</label>
-        <input formControlName="name" type="text" class="w-full border p-2 rounded" />
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+        <input id="name" formControlName="name" type="text"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
+            placeholder="Ex: João da Silva" />
+        <div *ngIf="clientForm.controls['name'].invalid && clientForm.controls['name'].touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="clientForm.controls['name'].errors?.['required']">O nome é obrigatório.</div>
+        </div>
     </div>
 
     <div>
-        <label class="block font-medium">Email</label>
-        <input formControlName="email" type="email" class="w-full border p-2 rounded" />
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input id="email" formControlName="email" type="email"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
+            placeholder="Ex: joao.silva@email.com" />
+        <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="clientForm.controls['email'].errors?.['required']">O email é obrigatório.</div>
+            <div *ngIf="clientForm.controls['email'].errors?.['email']">Formato de email inválido.</div>
+        </div>
     </div>
 
     <div>
-        <label class="block font-medium">Telefone</label>
-        <input formControlName="telephone" type="text" class="w-full border p-2 rounded" />
+        <label for="telephone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+        <input id="telephone" formControlName="telephone" type="text" mask="(00) 00000-0000"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
+            placeholder="Ex: (XX) XXXXX-XXXX" />
+        <div *ngIf="clientForm.controls['telephone'].invalid && clientForm.controls['telephone'].touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="clientForm.controls['telephone'].errors?.['required']">O telefone é obrigatório.</div>
+        </div>
     </div>
 
-    <div class="text-right">
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            {{ client ? 'Atualizar' : 'Cadastrar' }}
+    <div>
+        <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
+        <input id="address" formControlName="address" type="text"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
+            placeholder="Ex: Rua Exemplo, 123, Bairro, Cidade - UF" />
+    </div>
+
+    <div>
+        <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+        <input id="birthdate" formControlName="birthdate" type="date"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3" />
+    </div>
+
+    <div>
+        <label for="cpf_cnpj" class="block text-sm font-medium text-gray-700 mb-1">CPF/CNPJ</label>
+        <input id="cpf_cnpj" formControlName="cpf_cnpj" type="text" mask="000.000.000-00||00.000.000/0000-00"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
+            placeholder="Ex: 000.000.000-00 ou 00.000.000/0000-00" />
+        <div *ngIf="clientForm.controls['cpf_cnpj'].invalid && clientForm.controls['cpf_cnpj'].touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="clientForm.controls['cpf_cnpj'].errors?.['required']">O CPF/CNPJ é obrigatório.</div>
+        </div>
+    </div>
+
+
+    <div class="pt-4 flex justify-end space-x-3">
+        <button type="button" (click)="onCancel()"
+            class="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+            Cancelar
+        </button>
+        <button type="submit" [disabled]="clientForm.invalid"
+            class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ client ? 'Atualizar Cliente' : 'Cadastrar Cliente' }}
         </button>
     </div>
 </form>

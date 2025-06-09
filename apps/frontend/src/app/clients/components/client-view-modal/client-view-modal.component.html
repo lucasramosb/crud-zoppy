@@ -1,0 +1,36 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out"
+    *ngIf="open && client">
+    <div class="bg-white p-6 sm:p-8 rounded-lg w-full max-w-xl shadow-xl transform transition-all duration-300 ease-in-out scale-95 opacity-0"
+        [ngClass]="{'scale-100 opacity-100': open}">
+        <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Detalhes do Cliente: {{ client.name }}</h2>
+            <button class="text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+                (click)="handleClose()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div *ngIf="client" class="space-y-3 text-sm">
+            <div><strong>ID:</strong> {{ client.id }}</div>
+            <div><strong>Nome:</strong> {{ client.name }}</div>
+            <div><strong>Email:</strong> {{ client.email }}</div>
+            <div><strong>Telefone:</strong> {{ client.telephone }}</div>
+            <div *ngIf="client.cpf_cnpj"><strong>CPF/CNPJ:</strong> {{ client.cpf_cnpj }}</div>
+            <div *ngIf="client.address"><strong>Endereço:</strong> {{ client.address }}</div>
+            <div *ngIf="client.birthdate"><strong>Data de Nascimento:</strong> {{ client.birthdate | date:'dd/MM/yyyy'
+                }}</div>
+            <div class="pt-2 text-xs text-gray-500">
+                <div><strong>Criado em:</strong> {{ client.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+                <div><strong>Atualizado em:</strong> {{ client.updatedAt | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+            </div>
+        </div>
+        <div class="mt-8 flex justify-end">
+            <button type="button" (click)="handleClose()"
+                class="px-6 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>

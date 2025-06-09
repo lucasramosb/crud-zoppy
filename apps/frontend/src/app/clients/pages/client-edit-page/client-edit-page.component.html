@@ -1,9 +1,26 @@
-<div class="p-4">
-    <h1 class="text-xl font-bold mb-4">Editar Cliente</h1>
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="mb-6 pb-4 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">
+            {{ client ? 'Editar Cliente: ' + client.name : 'Editar Cliente' }}
+        </h1>
+    </div>
 
-    <div *ngIf="loading">Carregando cliente...</div>
+    <div *ngIf="loading" class="flex justify-center items-center py-10">
+        <p class="text-gray-500">Carregando dados do cliente...</p>
+    </div>
 
-    <div *ngIf="!loading && client">
-        <app-clients-form [client]="client" (formSubmitted)="onFormSubmitted()"></app-clients-form>
+    <div *ngIf="!loading && client" class="bg-white shadow-md rounded-lg p-6 sm:p-8">
+        <app-clients-form [client]="client" (formSubmitted)="onFormSubmitted($event)"></app-clients-form>
+    </div>
+
+    <div class="mt-6 text-center">
+        <button (click)="goBackToList()"
+            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-md transition duration-150 ease-in-out">
+            Voltar para a Lista
+        </button>
+    </div>
+
+    <div *ngIf="!loading && !client" class="text-center py-10">
+        <p class="text-red-500 font-semibold">Cliente não encontrado.</p>
     </div>
 </div>
