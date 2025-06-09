@@ -1,0 +1,24 @@
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="mb-6 pb-4 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">
+            {{ pedido ? 'Editar Pedido #' + pedido.id.substring(0,8) : 'Editar Pedido' }}
+        </h1>
+    </div>
+
+    <div *ngIf="isLoading" class="flex justify-center items-center py-10">
+        <p class="text-gray-500">Carregando dados do pedido...</p>
+    </div>
+
+    <div *ngIf="!isLoading && pedido" class="bg-white shadow-md rounded-lg p-6 sm:p-8">
+        <app-pedido-form [pedido]="pedido" (formSubmitted)="handleFormSubmit($event)"
+            (cancelled)="goBackToList()"></app-pedido-form>
+    </div>
+
+    <div *ngIf="!isLoading && !pedido" class="text-center py-10">
+        <p class="text-red-500 font-semibold">Pedido não encontrado.</p>
+        <button (click)="goBackToList()"
+            class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out">
+            Voltar para a Lista de Pedidos
+        </button>
+    </div>
+</div>
