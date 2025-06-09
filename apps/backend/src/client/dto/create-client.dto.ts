@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsDate,
   IsPhoneNumber,
-  IsNumberString,
   MinLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -21,11 +20,11 @@ export class CreateClientDto {
 
   @IsNotEmpty()
   @IsString()
-  @IsPhoneNumber()
-  @IsNumberString()
+  @IsPhoneNumber('BR')
   telephone: string;
 
   @IsNotEmpty()
+  @IsString()
   @MinLength(11, { message: 'Documento inválido' })
   cpf_cnpj: string;
 
