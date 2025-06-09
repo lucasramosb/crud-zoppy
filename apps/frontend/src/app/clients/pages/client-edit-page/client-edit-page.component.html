@@ -1,0 +1,9 @@
+<div class="p-4">
+    <h1 class="text-xl font-bold mb-4">Editar Cliente</h1>
+
+    <div *ngIf="loading">Carregando cliente...</div>
+
+    <div *ngIf="!loading && client">
+        <app-clients-form [client]="client" (formSubmitted)="onFormSubmitted()"></app-clients-form>
+    </div>
+</div>

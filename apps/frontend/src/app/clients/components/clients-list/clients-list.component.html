@@ -1,0 +1,27 @@
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white border">
+        <thead class="bg-gray-100 text-left">
+            <tr>
+                <th class="p-3">Nome</th>
+                <th class="p-3">Email</th>
+                <th class="p-3">Telefone</th>
+                <th class="p-3">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients" class="border-t">
+                <td class="p-3">{{ client.name }}</td>
+                <td class="p-3">{{ client.email }}</td>
+                <td class="p-3">{{ client.telephone }}</td>
+                <td class="p-3 flex gap-2">
+                    <a [routerLink]="['/clients/edit', client.id]"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Editar</a>
+                    <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                        (click)="deleteClient(client.id)">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

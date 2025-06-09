@@ -1,0 +1,12 @@
+<div class="p-4 sm:p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-xl font-bold">Clientes</h1>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="toggleModal()">
+            Novo Cliente
+        </button>
+    </div>
+
+    <app-clients-list></app-clients-list>
+
+    <app-clients-modal [open]="modalOpen" (close)="toggleModal()"></app-clients-modal>
+</div>

@@ -1,0 +1,9 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" *ngIf="open">
+    <div class="bg-white p-6 rounded w-full max-w-md shadow-lg relative">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800" (click)="handleClose()">
+            ✕
+        </button>
+        <h2 class="text-lg font-bold mb-4">Novo Cliente</h2>
+        <app-clients-form (formSubmitted)="handleSubmitted()"></app-clients-form>
+    </div>
+</div>
