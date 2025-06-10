@@ -13,7 +13,7 @@
             Adicionar Cliente
         </button>
     </div>
-    <app-clients-list *ngIf="!isLoading" [clients]="clients" (deleted)="handleClientDeleted($event)"
+    <app-clients-list *ngIf="!isLoading" [clients]="clients" (deleted)="handleClientDeleted()"
         (viewDetailsClicked)="openViewClientModal($event)">
     </app-clients-list>
 
